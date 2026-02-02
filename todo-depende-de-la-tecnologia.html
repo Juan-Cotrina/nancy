@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Dependencia Tecnológica - Juan Cotrina</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* 1. SETUP & RESET */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #f0f4f8; /* Soft blue-grey background */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+            padding: 40px 0;
+            font-family: 'Open Sans', sans-serif;
+            color: #1e293b;
+            scroll-behavior: smooth; /* Suaviza el scroll nativo */
+        }
+
+        /* 2. SLIDE CONTAINER */
+        .slide-container {
+            width: 1000px; /* Ancho fijo para consistencia */
+            height: 600px; /* Altura fija para formato slide */
+            background-color: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            padding: 50px;
+            flex-shrink: 0; /* Evitar que se encojan */
+            page-break-after: always;
+            transition: transform 0.3s ease;
+        }
+
+        .slide-container:hover {
+            transform: translateY(-5px); /* Efecto sutil al pasar el mouse */
+        }
+
+        /* 3. TYPOGRAPHY & THEME */
+        :root {
+            --primary-color: #0ea5e9; /* Sky Blue */
+            --secondary-color: #f97316; /* Energetic Orange */
+            --text-dark: #1e293b; /* Slate Dark */
+            --text-light: #475569; /* Slate Medium */
+            --bg-accent: #f0f9ff; /* Very Light Blue */
+        }
+
+        h1, h2, h3 {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.2;
+        }
+
+        h1 { font-size: 56px; font-weight: 700; margin-bottom: 20px; }
+        h2 { font-size: 42px; font-weight: 600; margin-bottom: 25px; }
+        h3 { font-size: 24px; font-weight: 600; margin-bottom: 15px; color: var(--primary-color); }
+        
+        p, li {
+            font-size: 18px;
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        ul li {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 15px;
+        }
+
+        ul li::before {
+            content: '\f00c'; /* FontAwesome Check */
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            top: 4px;
+            color: var(--secondary-color);
+            font-size: 18px;
+        }
+
+        /* 4. LAYOUT UTILITIES */
+        .content-area {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            height: 100%;
+        }
+
+        .image-wrapper {
+            width: 100%;
+            height: 350px;
+            border-radius: 16px;
+            overflow: hidden;
+            background-color: var(--bg-accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Rounded Image Variant */
+        .rounded-image .image-wrapper {
+            border-radius: 50%;
+            width: 350px;
+            height: 350px;
+            margin: 0 auto;
+            border: 8px solid var(--bg-accent);
+        }
+
+        /* Title Slide Layout */
+        .title-layout {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            margin: -50px;
+            padding: 50px;
+        }
+        
+        .title-layout h1 { color: #0284c7; }
+        .title-layout p { font-size: 24px; max-width: 800px; color: #334155; }
+        
+        /* Author Styling */
+        .author-tag {
+            background-color: #ffffff;
+            padding: 10px 25px;
+            border-radius: 50px;
+            margin-top: 30px;
+            font-weight: 600;
+            color: var(--primary-color);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            font-size: 18px !important;
+        }
+
+        /* Tiled Content Layout */
+        .tiled-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            width: 100%;
+        }
+
+        .tile {
+            background-color: var(--bg-accent);
+            padding: 25px;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .tile .icon {
+            font-size: 40px;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+
+        /* Bleed Image Layout */
+        .slide-container.bleed-image-layout {
+            padding: 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .bleed-text-side {
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .bleed-image-side {
+            width: 100%;
+            height: 600px;
+            object-fit: cover;
+        }
+        
+        /* Decorative Elements */
+        .bg-blob {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(14, 165, 233, 0.1) 0%, rgba(255,255,255,0) 70%);
+            border-radius: 50%;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .blob-tr { top: -80px; right: -80px; }
+        .blob-bl { bottom: -80px; left: -80px; }
+
+        .slide-number {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 14px;
+            color: #cbd5e1;
+            font-weight: 600;
+        }
+
+        .slide-container > * { position: relative; z-index: 1; }
+    </style>
+</head>
+<body>
+
+<!-- Slide 1: Title -->
+<div class="slide-container" id="slide-1">
+    <div class="title-layout">
+        <div class="image-wrapper" style="width: 200px; height: 200px; border-radius: 50%; margin-bottom: 30px; border: none;">
+            <img src="https://placehold.co/200x200/0ea5e9/ffffff?text=Mundo+Digital" alt="Icono Mundo Digital">
+        </div>
+        <h1>La Era Digital</h1>
+        <p>¿Por qué hoy todo depende de la tecnología?</p>
+        <p style="font-size: 16px; margin-top: 20px; color: #64748b;">Una exploración visual de nuestra vida conectada</p>
+        
+        <!-- Author Added Here -->
+        <p class="author-tag">Autor: Juan Cotrina</p>
+        
+    </div>
+    <div class="slide-number">1 / 20</div>
+</div>
+
+<!-- Slide 2: Intro -->
+<div class="slide-container" id="slide-2">
+    <div class="bg-blob blob-tr"></div>
+    <h2 class="slide-title">El Tejido Digital</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <p>Hoy en día, la tecnología no es solo una herramienta, sino el <strong>tejido invisible</strong> que sostiene nuestra sociedad moderna.</p>
+                <p>Desde que despertamos hasta que dormimos, interactuamos con sistemas complejos que facilitan, protegen y enriquecen nuestras vidas.</p>
+                <ul>
+                    <li>Infraestructura crítica invisible</li>
+                    <li>Dependencia funcional diaria</li>
+                    <li>Interconexión global constante</li>
+                </ul>
+            </div>
+            <div class="image-wrapper">
+                <img src="https://placehold.co/600x400/f0f9ff/0ea5e9?text=Red+Conectada" alt="Red abstracta">
+            </div>
+        </div>
+    </div>
+    <div class="slide-number">2 / 20</div>
+</div>
+
+<!-- Slide 3: Communication -->
+<div class="slide-container" id="slide-3">
+    <div class="bg-blob blob-bl"></div>
+    <h2 class="slide-title">Conectados al Instante</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div class="image-wrapper">
+                <img src="https://placehold.co/600x400/f0f9ff/0ea5e9?text=Video+Llamada" alt="Videollamada">
+            </div>
+            <div>
+                <h3>La distancia ya no existe</h3>
+                <p>La tecnología ha eliminado las barreras geográficas. Las aplicaciones de mensajería y las videollamadas nos permiten estar presentes en la vida de otros.</p>
+                <ul>
+                    <li>Comunicación en tiempo real</li>
+                    <li>Colaboración global sin fronteras</li>
+                    <li>Redes sociales como plazas públicas</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide-number">3 / 20</div>
+</div>
+
+<!-- Slide 4: Work -->
+<div class="slide-container" id="slide-4">
+    <h2 class="slide-title">La Oficina en Cualquier Lugar</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <h3>Revolución del Trabajo Remoto</h3>
+                <p>La nube y las herramientas de colaboración han desvinculado el trabajo de un lugar físico. Hoy, la productividad viaja con nosotros.</p>
+                <ul>
+                    <li>Flexibilidad laboral</li>
+                    <li>Acceso a talento global</li>
+                    <li>Herramientas colaborativas (Slack, Zoom)</li>
+                </ul>
+            </div>
+            <div class="image-wrapper">
+                <img src="https://placehold.co/600x400/f0f9ff/0ea5e9?text=Trabajo+Remoto" alt="Oficina en casa">
+            </div>
+        </div>
+    </div>
+    <div class="slide-number">4 / 20</div>
+</div>
+
+<!-- Slide 5: Economy -->
+<div class="slide-container bleed-image-layout" id="slide-5">
+    <div class="bleed-text-side">
+        <h2>Economía Sin Efectivo</h2>
+        <p>El dinero físico está dando paso a bits y bytes. Las transacciones digitales son el motor que mantiene girando la economía global las 24 horas.</p>
+        <ul>
+            <li>Pagos móviles instantáneos</li>
+            <li>Banca en línea segura</li>
+            <li>Comercio electrónico global</li>
+        </ul>
+    </div>
+    <img class="bleed-image-side" src="https://placehold.co/600x800/f0f9ff/0ea5e9?text=Pagos+Digitales" alt="Pago móvil">
+    <div class="slide-number" style="color: #64748b;">5 / 20</div>
+</div>
+
+<!-- Slide 6: Information -->
+<div class="slide-container" id="slide-6">
+    <div class="bg-blob blob-tr"></div>
+    <h2 class="slide-title">El Conocimiento a un Clic</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div class="image-wrapper">
+                <img src="https://placehold.co/600x400/f0f9ff/0ea5e9?text=Busqueda+Info" alt="Búsqueda en tablet">
+            </div>
+            <div>
+                <h3>Democratización de la Información</h3>
+                <p>Antes, el conocimiento vivía en bibliotecas físicas. Hoy, tenemos acceso a casi toda la información de la humanidad desde un dispositivo de bolsillo.</p>
+                <ul>
+                    <li>Motores de búsqueda inteligentes</li>
+                    <li>Acceso inmediato a noticias</li>
+                    <li>Autoaprendizaje continuo</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide-number">6 / 20</div>
+</div>
+
+<!-- Slide 7: Education -->
+<div class="slide-container" id="slide-7">
+    <h2 class="slide-title">Educación Sin Fronteras</h2>
+    <div class="content-area">
+        <div class="two-column rounded-image">
+            <div>
+                <h3>Aprendizaje Personalizado</h3>
+                <p>La tecnología educativa (EdTech) adapta el aprendizaje a cada estudiante, ofreciendo recursos interactivos y cursos mundiales.</p>
+                <ul>
+                    <li>Cursos masivos en línea (MOOCs)</li>
+                    <li>Realidad aumentada en el aula</li>
+                    <li>Acceso a expertos globales</li>
+                </ul>
+            </div>
+            <div class="image-wrapper">
+                <img src="https://placehold.co/400x400/f0f9ff/0ea5e9?text=E-Learning" alt="Educación Online">
+            </div>
+        </div>
+    </div>
+    <div class="slide-number">7 / 20</div>
+</div>
+
+<!-- Slide 8: Healthcare -->
+<div class="slide-container" id="slide-8">
+    <div class="bg-blob blob-bl"></div>
+    <h2 class="slide-title">Salud y Tecnología</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div class="image-wrapper">
+                <img src="https://placehold.co/600x400/f0f9ff/0ea5e9?text=Telemedicina" alt="Médico Digital">
+            </div>
+            <div>
+                <h3>Medicina del Futuro, Hoy</h3>
+                <p>Desde diagnósticos asistidos por IA hasta consultas remotas, la tecnología no solo mejora la calidad de vida, sino que la extiende.</p>
+                <ul>
+                    <li>Telemedicina accesible</li>
+                    <li>Monitoreo con wearables</li>
+                    <li>Cirugía robótica de precisión</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide-number">8 / 20</div>
+</div>
+
+<!-- Slide 9: Smart Home -->
+<div class="slide-container" id="slide-9">
+    <h2 class="slide-title">Hogares Inteligentes</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <h3>Comodidad Automatizada</h3>
+                <p>Nuestros espacios vitales "piensan" por nosotros. El Internet de las Cosas (IoT) conecta electrodomésticos para gestionar energía y seguridad.</p>
+                <ul>
+                    <li>Asistentes de voz</li>
+                    <li>Seguridad automatizada</li>
+                    <li>Eficiencia energética</li>
+                </ul>
+            </div>
+            <div class="image-wrapper">
+                <img src="https://placehold.co/600x400/f0f9ff/0ea5e9?text=Casa+Inteligente" alt="Smart Home">
+            </div>
+        </div>
+    </div>
+    <div class="slide-number">9 / 20</div>
+</div>
+
+<!-- Slide 10: Transport -->
+<div class="slide-container bleed-image-layout" id="slide-10">
+    <img class="bleed-image-side" src="https://placehold.co/600x800/f0f9ff/0ea5e9?text=Navegacion+GPS" alt="GPS Mapa">
+    <div class="bleed-text-side">
+        <h2>Movilidad Precisa</h2>
+        <p>Perderse es cosa del pasado. La tecnología GPS y las apps de transporte han optimizado cómo nos movemos y la logística mundial.</p>
+        <ul>
+            <li>Navegación en tiempo real</li>
+            <li>Optimización de rutas</li>
+            <li>Transporte bajo demanda</li>
+        </ul>
+    </div>
+    <div class="slide-number" style="color: #64748b; left: 20px; right: auto;">10 / 20</div>
+</div>
+
+<!-- Slide 11: Entertainment -->
+<div class="slide-container" id="slide-11">
+    <div class="bg-blob blob-tr"></div>
+    <h2 class="slide-title">Entretenimiento a la Carta</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <h3>Diversión sin Horarios</h3>
+                <p>El entretenimiento ya no es pasivo. Elegimos qué ver y cuándo, transformando radicalmente la industria del ocio.</p>
+                <ul>
+                    <li>Streaming de video y música</li>
+                    <li>Videojuegos inmersivos</li>
+                    <li>Realidad virtual</li>
+                </ul>
+            </div>
+            <div class="image-wrapper">
+                <img src="https://placehold.co/600x400/f0f9ff/0ea5e9?text=Streaming" alt="Entretenimiento">
+            </div>
+        </div>
+    </div>
+    <div class="slide-number">11 / 20</div>
+</div>
+
+<!-- Slide 12: Social Media -->
+<div class="slide-container" id="slide-12">
+    <h2 class="slide-title">El Poder de lo Social</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div class="image-wrapper">
+                <img src="https://placehold.co/600x400/f0f9ff/0ea5e9?text=Redes+Sociales" alt="Redes Sociales">
+            </div>
+            <div>
+                <h3>Conexión y Voz</h3>
+                <p>Las redes sociales dan voz a cualquier persona y aceleran la difusión de ideas, creando comunidades globales.</p>
+                <ul>
+                    <li>Comunidades por intereses</li>
+                    <li>Expresión libre</li>
+                    <li>Tendencias instantáneas</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide-number">12 / 20</div>
+</div>
+
+<!-- Slide 13: Industry/Automation -->
+<div class="slide-container" id="slide-13">
+    <div class="bg-blob blob-bl"></div>
+    <h2 class="slide-title">Industria Automatizada</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div class="image-wrapper">
+                <img src="https://placehold.co/600x400/f0f9ff/0ea5e9?text=Robotica" alt="Brazo Robótico">
+            </div>
+            <div>
+                <h3>Precisión y Eficiencia</h3>
+                <p>La automatización y la robótica permiten una producción masiva con niveles de precisión imposibles para la mano humana.</p>
+                <ul>
+                    <li>Producción 24/7</li>
+                    <li>Reducción de errores</li>
+                    <li>Seguridad laboral</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide-number">13 / 20</div>
+</div>
+
+<!-- Slide 14: Agriculture -->
+<div class="slide-container" id="slide-14">
+    <h2 class="slide-title">Agro-Tecnología</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <h3>Cultivando el Futuro</h3>
+                <p>Drones, sensores y datos permiten una agricultura de precisión que maximiza recursos y minimiza el impacto ambiental.</p>
+                <ul>
+                    <li>Monitoreo con drones</li>
+                    <li>Riego inteligente</li>
+                    <li>Predicción climática</li>
+                </ul>
+            </div>
+            <div class="image-wrapper">
+                <img src="https://placehold.co/600x400/f0f9ff/0ea5e9?text=Agro+Tech" alt="Dron Agrícola">
+            </div>
+        </div>
+    </div>
+    <div class="slide-number">14 / 20</div>
+</div>
+
+<!-- Slide 15: Big Data -->
+<div class="slide-container" id="slide-15">
+    <h2 class="slide-title">Datos: El Nuevo Petróleo</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div class="image-wrapper">
+                <img src="https://placehold.co/600x400/f0f9ff/0ea5e9?text=Big+Data" alt="Datos">
+            </div>
+            <div>
+                <h3>Decisiones Informadas</h3>
+                <p>El "Big Data" permite a empresas y gobiernos tomar decisiones basadas en patrones reales en lugar de suposiciones.</p>
+                <ul>
+                    <li>Personalización de servicios</li>
+                    <li>Optimización de recursos</li>
+                    <li>Predicción de tendencias</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide-number">15 / 20</div>
+</div>
+
+<!-- Slide 16: AI -->
+<div class="slide-container bleed-image-layout" id="slide-16">
+    <div class="bleed-text-side">
+        <h2>Inteligencia Artificial</h2>
+        <p>La IA aprende y asiste, convirtiéndose en un "copiloto" para la inteligencia humana en casi todos los campos.</p>
+        <ul>
+            <li>Asistentes virtuales</li>
+            <li>Generación creativa</li>
+            <li>Resolución de problemas</li>
+        </ul>
+    </div>
+    <img class="bleed-image-side" src="https://placehold.co/600x800/f0f9ff/0ea5e9?text=IA+Cerebro" alt="Inteligencia Artificial">
+    <div class="slide-number" style="color: #64748b;">16 / 20</div>
+</div>
+
+<!-- Slide 17: Cybersecurity -->
+<div class="slide-container" id="slide-17">
+    <div class="bg-blob blob-tr"></div>
+    <h2 class="slide-title">Seguridad Digital</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <h3>Protegiendo lo Invisible</h3>
+                <p>A mayor dependencia tecnológica, mayor necesidad de seguridad. Proteger nuestros datos es proteger nuestra identidad.</p>
+                <ul>
+                    <li>Encriptación de datos</li>
+                    <li>Protección de infraestructuras</li>
+                    <li>Privacidad del usuario</li>
+                </ul>
+            </div>
+            <div class="image-wrapper">
+                <img src="https://placehold.co/600x400/f0f9ff/0ea5e9?text=Ciberseguridad" alt="Seguridad">
+            </div>
+        </div>
+    </div>
+    <div class="slide-number">17 / 20</div>
+</div>
+
+<!-- Slide 18: Environment -->
+<div class="slide-container" id="slide-18">
+    <h2 class="slide-title">Tecnología Sostenible</h2>
+    <div class="content-area">
+        <div class="two-column rounded-image">
+            <div class="image-wrapper">
+                <img src="https://placehold.co/400x400/f0f9ff/0ea5e9?text=Eco+Tech" alt="Tecnología Verde">
+            </div>
+            <div>
+                <h3>Innovación para el Planeta</h3>
+                <p>La tecnología es aliada contra el cambio climático, desarrollando nuevas fuentes de energía y materiales eficientes.</p>
+                <ul>
+                    <li>Energías renovables</li>
+                    <li>Vehículos eléctricos</li>
+                    <li>Economía circular</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide-number">18 / 20</div>
+</div>
+
+<!-- Slide 19: Human Factor -->
+<div class="slide-container" id="slide-19">
+    <div class="bg-blob blob-bl"></div>
+    <h2 class="slide-title">El Factor Humano</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <h3>Equilibrio Necesario</h3>
+                <p>Aunque dependemos de la tecnología, la esencia humana es el centro. La tecnología debe servirnos para ser más libres.</p>
+                <ul>
+                    <li>Ética tecnológica</li>
+                    <li>Desconexión saludable</li>
+                    <li>Propósito humano</li>
+                </ul>
+            </div>
+            <div class="image-wrapper">
+                <img src="https://placehold.co/600x400/f0f9ff/0ea5e9?text=Humano+vs+Tech" alt="Factor Humano">
+            </div>
+        </div>
+    </div>
+    <div class="slide-number">19 / 20</div>
+</div>
+
+<!-- Slide 20: Q&A -->
+<div class="slide-container" id="slide-20">
+    <div class="title-layout">
+        <div class="image-wrapper" style="width: 150px; height: 150px; border-radius: 50%; margin-bottom: 30px; border: none;">
+             <img src="https://placehold.co/150x150/f97316/ffffff?text=?" alt="Preguntas">
+        </div>
+        <h1>¿Preguntas?</h1>
+        <p>Gracias por su atención</p>
+        <p style="font-size: 20px; margin-top: 30px;">Exploremos juntos el futuro digital.</p>
+        <p style="font-size: 16px; margin-top: 20px; color: #94a3b8;">Autor: Juan Cotrina</p>
+    </div>
+    <div class="slide-number">20 / 20</div>
+</div>
+
+<!-- JavaScript for Navigation -->
+<script>
+    // Simple script to handle navigation between slides using Arrow keys
+    document.addEventListener('keydown', function(event) {
+        const slides = document.querySelectorAll('.slide-container');
+        const slideHeight = slides[0].offsetHeight + 40; // Height + gap
+        const currentScroll = window.scrollY;
+        
+        // Calculate current slide index based on scroll position
+        let currentIndex = Math.round(currentScroll / slideHeight);
+
+        if (event.key === 'ArrowDown' || event.key === 'ArrowRight') {
+            event.preventDefault(); // Prevent default scroll
+            if (currentIndex < slides.length - 1) {
+                window.scrollTo({
+                    top: (currentIndex + 1) * slideHeight,
+                    behavior: 'smooth'
+                });
+            }
+        } else if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') {
+            event.preventDefault();
+            if (currentIndex > 0) {
+                window.scrollTo({
+                    top: (currentIndex - 1) * slideHeight,
+                    behavior: 'smooth'
+                });
+            }
+        }
+    });
+
+    // Console greeting
+    console.log("Presentación cargada. Autor: Juan Cotrina. Usa las flechas del teclado para navegar.");
+</script>
+
+</body>
+</html>
