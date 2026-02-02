@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Problemas que resolvieron las computadoras</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            --accent-blue: #38bdf8;
+            --accent-green: #4ade80;
+            --text-main: #f1f5f9;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent-green);
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--card-border);
+            padding: 30px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-blue);
+            box-shadow: 0 10px 30px rgba(56, 189, 248, 0.1);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .icon {
+            font-size: 2rem;
+            background: rgba(56, 189, 248, 0.1);
+            padding: 10px;
+            border-radius: 12px;
+        }
+
+        h2 {
+            font-size: 1.4rem;
+            margin: 0;
+            color: var(--accent-blue);
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            display: flex;
+            align-items: flex-start;
+            opacity: 0.85;
+        }
+
+        li::before {
+            content: "▹";
+            color: var(--accent-green);
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        footer {
+            margin-top: 60px;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+            text-align: center;
+            border-top: 2px solid var(--accent-blue);
+        }
+
+        .summary {
+            font-size: 1.2rem;
+            font-weight: 300;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .highlight {
+            color: var(--accent-blue);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Problemas que resolvieron las computadoras</h1>
+        <p class="subtitle">> Optimizando la civilización humana...</p>
+    </header>
+
+    <div class="grid">
+        <section class="card">
+            <div class="card-header">
+                <span class="icon">🧮</span>
+                <h2>Cálculos y datos</h2>
+            </div>
+            <ul>
+                <li>Cálculos complejos que tomaban semanas ahora toman segundos.</li>
+                <li>Procesamiento masivo de datos (censos, estadísticas, finanzas).</li>
+                <li>Eliminación de errores humanos en operaciones repetitivas.</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <div class="card-header">
+                <span class="icon">📬</span>
+                <h2>Comunicación</h2>
+            </div>
+            <ul>
+                <li>Comunicación instantánea global (email, mensajería, videollamadas).</li>
+                <li>Barreras geográficas eliminadas para colaboración.</li>
+                <li>Acceso inmediato a personas en cualquier parte del mundo.</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <div class="card-header">
+                <span class="icon">📚</span>
+                <h2>Acceso a información</h2>
+            </div>
+            <ul>
+                <li>Democratización del conocimiento (Internet, Wikipedia, buscadores).</li>
+                <li>Investigación acelerada en ciencia y academia.</li>
+                <li>Educación accesible desde cualquier lugar.</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <div class="card-header">
+                <span class="icon">🏥</span>
+                <h2>Medicina y ciencia</h2>
+            </div>
+            <ul>
+                <li>Diagnósticos más precisos (imágenes médicas, análisis).</li>
+                <li>Descubrimiento de medicamentos y simulaciones moleculares.</li>
+                <li>Secuenciación genética y medicina personalizada.</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <div class="card-header">
+                <span class="icon">🏭</span>
+                <h2>Productividad</h2>
+            </div>
+            <ul>
+                <li>Automatización de tareas repetitivas.</li>
+                <li>Gestión eficiente de inventarios, logística y producción.</li>
+                <li>Trabajo remoto posible.</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <div class="card-header">
+                <span class="icon">💰</span>
+                <h2>Economía y comercio</h2>
+            </div>
+            <ul>
+                <li>Transacciones financieras seguras e instantáneas.</li>
+                <li>Comercio electrónico global.</li>
+                <li>Banca accesible 24/7.</li>
+            </ul>
+        </section>
+
+        <section class="card" style="grid-column: span 1;">
+            <div class="card-header">
+                <span class="icon">🎨</span>
+                <h2>Creatividad</h2>
+            </div>
+            <ul>
+                <li>Herramientas de diseño, música y video.</li>
+                <li>Nuevas formas de arte y expresión.</li>
+                <li>Entretenimiento personalizado bajo demanda.</li>
+            </ul>
+        </section>
+    </div>
+
+    <footer>
+        <p class="summary">
+            En resumen: las computadoras resolvieron problemas de <span class="highlight">velocidad</span>, <span class="highlight">escala</span>, <span class="highlight">precisión</span> y <span class="highlight">accesibilidad</span> en prácticamente todas las áreas de la vida humana.
+        </p>
+    </footer>
+</div>
+
+</body>
+</html>
